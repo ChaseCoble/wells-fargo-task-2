@@ -24,73 +24,33 @@ public class Portfolio {
 
     @ManyToOne
     @JoinColumn(name="clientId")
-    private Client client;
-
-    @OneToMany(mappedBy = "portfolios", cascade = cascadeType.REMOVE)
-    private Set<Security> securities;
-
+    private Long client;
     protected Portfolio(){
     }
-    public Portfolio(Client clientNew, String creationDate, List<Security> securitiesList){
-        this.client = clientNew;
-        this.creationDate = creationDate;
+    public Portfolio(Client clientNew, String creationDate){
 
-
-        securities = new HashSet<Security>();
-        setSecuritiesFromList(securitiesList);
-        for(Security security : securitiesList){
-            security.setPortfolio(this);
-        }
     }
     @Override
     public String toString(){
-        String securityListString = String.format("Securities: %n %s",
-                securities.stream()
-                        .map(security -> String.format("#%d %s %s", security.getSecurityId(), security.getName(), security.getPurchaseDate()))
-                        .collect(Collectors.joining(",%n")));
         return(
                 String.format(
-                        "Portfolio ID: %d, Owner: %s, %s, Creation Date: %s %n %s"
-                        , portfolioId, client.getLastName(), client.getFirstName(), creationDate, securityListString));
+                        "Portfolio ID: %d, Owner: %s, %s, Creation Date: %s"
+                        , portfolioId, client.getLastName(), client.getFirstName(), creationDate));
     }
-    public void setClient(Client newClient){
+    public void setClient(Long newClient){
         if(client == newClient){
             return;
         }else {
-            client.deletePortfolio(this);
             this.client = newClient;
-            newClient.addPortfolio(this);
         }
     }
-    public Client getClient(){return client;}
-
+    public Long getClient(){return client;}
     public long getPortfolioId(){return portfolioId;}
 
     public String getCreationDate(){return creationDate;}
     public void setCreationDate(String newCreationDate){creationDate=newCreationDate;}
-    public void setSecuritiesFromList(List<Security> securitiesList){
-        securities.clear();
-        securities.addAll(securitiesList);
-        for(Security security : securitiesList){
-            security.setPortfolio(this);
-        }
-    }
-    public void addSecurity(Security security){
-        securities.add(security);
-        security.setPortfolio(this);
-    }
-    public void addPortfoliosFromList(List<Security> securitiesList){
-        securities.addAll(securitiesList);
-        for(Security security : securitiesList){
-            security.setPortfolio(this);
-        }
-    }
-    public void deleteSecurity(Security security){
-        securities.delete(security);
-    }
-    public void deleteSecuritiesFromList(List<Security> securitiesList){
-        securitiesList.forEach(securities::remove);
-    }
+
+
 
 
 }

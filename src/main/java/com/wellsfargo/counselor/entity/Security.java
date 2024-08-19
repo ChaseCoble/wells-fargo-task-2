@@ -1,10 +1,6 @@
 package main.java.com.wellsfargo.counselor.entity;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 
 import jakarta.persistence.Column;
@@ -21,7 +17,7 @@ public class Security {
 
     @ManyToOne
     @JoinColumn(name = "portfolioId")
-    private Portfolio portfolio;
+    private Long portfolio;
 
     @Column
     private String name;
@@ -39,7 +35,7 @@ public class Security {
     private int quantity;
 
     protected Security(){}
-    public Security(Portfolio portfolio, String name, String category, String purchaseDate, double purchasePrice, int quantity){
+    public Security(Long portfolio, String name, String category, String purchaseDate, double purchasePrice, int quantity){
         this.portfolio = portfolio;
         this.name = name;
         this.category = category;
@@ -56,10 +52,8 @@ public class Security {
 
     public Portfolio getPortfolio(){return portfolio;}
 
-    public void setPortfolio(Portfolio newPortfolio){
-        portfolio.deleteSecurity(this);
-        portfolio = newPortfolio;
-        newPortfolio.addSecurity(this);
+    public void setPortfolio(Long newPortfolio){
+        this.portfolio = newPortfolio;
     }
 
     public String getName(){return name;}
