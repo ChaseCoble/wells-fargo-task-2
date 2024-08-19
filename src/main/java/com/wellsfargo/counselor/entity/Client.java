@@ -13,7 +13,7 @@ public class Client extends Person{
     private long clientId;
     @ManyToOne
     @JoinColumn(name = "advisorId")
-    private long advisor;
+    private Advisor advisor;
 
     protected Client(){
         super();
@@ -30,8 +30,8 @@ public class Client extends Person{
                         , getFirstName(), getLastName(), clientId, getAddress(), getPhone(), getEmail()));
     }
 
-    public long getAdvisor(){return advisor;}
-    public void setAdvisor(long advisorId){
+    public Advisor getAdvisor(){return advisor;}
+    public void setAdvisor(Advisor advisorId){
        this.advisor = advisorId;
     }
 

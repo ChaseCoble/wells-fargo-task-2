@@ -24,7 +24,7 @@ public class Portfolio {
 
     @ManyToOne
     @JoinColumn(name="clientId")
-    private Long client;
+    private Client client;
     protected Portfolio(){
     }
     public Portfolio(Client clientNew, String creationDate){
@@ -37,14 +37,14 @@ public class Portfolio {
                         "Portfolio ID: %d, Owner: %s, %s, Creation Date: %s"
                         , portfolioId, client.getLastName(), client.getFirstName(), creationDate));
     }
-    public void setClient(Long newClient){
+    public void setClient(Client newClient){
         if(client == newClient){
             return;
         }else {
             this.client = newClient;
         }
     }
-    public Long getClient(){return client;}
+    public Client getClient(){return client;}
     public long getPortfolioId(){return portfolioId;}
 
     public String getCreationDate(){return creationDate;}
