@@ -14,7 +14,6 @@ public class Security {
     @Id
     @GeneratedValue
     private long securityId;
-
     @ManyToOne
     @JoinColumn(name = "portfolioId")
     private Long portfolio;
